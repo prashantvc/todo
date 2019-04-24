@@ -1,17 +1,28 @@
-<ion-content padding center text-center>
-  <ion-title>MSAL App</ion-title>
-  <ion-list>
-    <ion-item>
-      <ion-input type="text" placeholder="Username" [(ngModel)]="username"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input type="password" placeholder="Password" [(ngModel)]="password"></ion-input>
-    </ion-item>
-  </ion-list>
-  <ion-button expand="full" (click)="login()">
+<ion-content padding>
+  <ion-title text-center>MSAL App</ion-title>
+  <div *ngIf="isLoggedIn">
+    <ion-card color="light">
+      <ion-img src="https://upload.wikimedia.org/wikipedia/commons/b/bb/Kittyply_edit1.jpg"></ion-img>
+      <ion-card-header>
+        <ion-card-subtitle>PROFILE</ion-card-subtitle>
+        <ion-card-title>John Appleseed</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        Keep close to Nature's heart... and break clear away, once in awhile,
+        and climb a mountain or spend a week in the woods. Wash your spirit clean.
+      </ion-card-content>
+    </ion-card>
+    <ion-button expand="full" color="secondary" (click)="getUserDetails()">
+      get user
+    </ion-button>
+  </div>
+
+  <ion-button *ngIf="!isLoggedIn" expand="full" (click)="login()">
     login
   </ion-button>
-  <ion-button expand="full" color="light" (click)="goRegister()">
-    register
+  <ion-button *ngIf="isLoggedIn" expand="full" (click)="login()">
+    logout
   </ion-button>
+
 </ion-content>

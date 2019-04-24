@@ -1,3 +1,4 @@
+import { BroadcastService, MsalService } from '@azure/msal-angular';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -7,19 +8,37 @@ import { Router } from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  username: string;
-  password: string;
-
-  constructor(private router:Router){
-    
+  constructor(private router: Router, private broadcastService: BroadcastService, private authService: MsalService) { 
+    if (this.authService.getUser()) {
+      this.isLoggedIn = true;
+    }
+    else {
+      this.isLoggedIn = false;
+    }
   }
+
+  isLoggedIn: boolean = false;
 
   login() {
-    console.log(`username: ${this.username}, password: ${this.password}`);
-    this.router.navigate(['product']);
+    if (this.isLoggedIn) {
+      this.authService.logout();
+      return;
+    }
+    this.authService.loginRedirect();
   }
 
-  goRegister() {
+  getUserDetails(){
+    var user = this.authService.getUser();
+    console.log(user);
+  }
 
+  ngOnInit() {
+    this.broadcastService.subscribe("msal:acquireTokenSuccess", payload => {
+      console.log(`login success ${payload}`);
+    });
+
+    this.broadcastService.subscribe("msal:acquireTokenFailure", payload => {
+      console.log(`login failed ${payload}`);
+    });
   }
 }
