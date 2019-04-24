@@ -1,3 +1,4 @@
+import { HttpServiceHelper } from './common/HttpServiceHelper';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -10,7 +11,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { MsalModule, MsalInterceptor } from "@azure/msal-angular";
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LogLevel } from 'msal';
 
 export function loggerCallback(logLevel, message, piiEnabled) {
@@ -21,7 +22,7 @@ export const protectedResourceMap: [string, string[]][] = [['https://buildtodose
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,
     MsalModule.forRoot({
       clientID: '6226576d-37e9-49eb-b201-ec1eeb0029b6',
       authority: "https://login.microsoftonline.com/common/",
@@ -43,6 +44,7 @@ export const protectedResourceMap: [string, string[]][] = [['https://buildtodose
   providers: [
     StatusBar,
     SplashScreen,
+    HttpServiceHelper,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HTTP_INTERCEPTORS,

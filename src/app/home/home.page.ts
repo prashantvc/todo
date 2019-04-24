@@ -1,3 +1,4 @@
+import { HttpServiceHelper } from './../common/HttpServiceHelper';
 import { BroadcastService, MsalService } from '@azure/msal-angular';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
@@ -9,7 +10,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  constructor(private router: Router, private broadcastService: BroadcastService, private authService: MsalService) {
+  constructor(private router: Router, private broadcastService: BroadcastService, private authService: MsalService, private httpService: HttpServiceHelper) {
     if (this.authService.getUser()) {
       this.isLoggedIn = true;
     }
@@ -30,6 +31,8 @@ export class HomePage {
     var user = this.authService.getUser();
     this.userData = { name: user.name, email: user.displayableId };
     console.log(`${user.displayableId}, ${user.name}`);
+
+    this.httpService.httpGetRequest("https://graph.microsoft.com/v1.0/me/")
   }
 
   ngOnInit() {
