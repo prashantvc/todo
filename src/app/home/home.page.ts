@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  constructor(private router: Router, private broadcastService: BroadcastService, private authService: MsalService) { 
+  constructor(private router: Router, private broadcastService: BroadcastService, private authService: MsalService) {
     if (this.authService.getUser()) {
       this.isLoggedIn = true;
     }
@@ -16,8 +16,6 @@ export class HomePage {
       this.isLoggedIn = false;
     }
   }
-
-  isLoggedIn: boolean = false;
 
   login() {
     if (this.isLoggedIn) {
@@ -27,9 +25,10 @@ export class HomePage {
     this.authService.loginRedirect();
   }
 
-  getUserDetails(){
+  getUserDetails() {
     var user = this.authService.getUser();
-    console.log(user);
+    this.userData = { name: user.name, email: user.displayableId };
+    console.log(`${user.displayableId}, ${user.name}`);
   }
 
   ngOnInit() {
@@ -41,4 +40,7 @@ export class HomePage {
       console.log(`login failed ${payload}`);
     });
   }
+
+  isLoggedIn: boolean = false;
+  userData = {name:"User name", email:"email@microsoft.com"};
 }

@@ -5,13 +5,12 @@
       <ion-img src="https://upload.wikimedia.org/wikipedia/commons/b/bb/Kittyply_edit1.jpg"></ion-img>
       <ion-card-header>
         <ion-card-subtitle>PROFILE</ion-card-subtitle>
-        <ion-card-title>John Appleseed</ion-card-title>
+        <ion-card-title>{{userData.name}}</ion-card-title>
       </ion-card-header>
-      
-      <ion-card-content>
-        Keep close to Nature's heart... and break clear away, once in awhile,
-        and climb a mountain or spend a week in the woods. Wash your spirit clean.
-      </ion-card-content>
+      <ion-item>
+        <ion-icon slot="start" name="mail"></ion-icon>
+        <ion-label>{{userData.email}}</ion-label>
+      </ion-item>
     </ion-card>
     <ion-button expand="full" color="secondary" (click)="getUserDetails()">
       get user
