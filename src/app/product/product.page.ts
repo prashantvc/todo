@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BroadcastService, MsalService } from '@azure/msal-angular';
 
 @Component({
   selector: 'app-product',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductPage implements OnInit {
 
-  constructor() { }
+  constructor(private broadcastService: BroadcastService,
+    private authService: MsalService) { }
 
   ngOnInit() {
-  }
+    this.broadcastService.subscribe("msal:acquireTokenSuccess", payload => {
+      console.log(payload);
+    });
 
+    this.broadcastService.subscribe("msal:acquireTokenFailure", payload => {
+      console.log(payload);
+    });
+  }
 }
