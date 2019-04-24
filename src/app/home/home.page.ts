@@ -1,6 +1,7 @@
 import { BroadcastService, MsalService } from '@azure/msal-angular';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -32,7 +33,7 @@ export class HomePage {
   }
 
   ngOnInit() {
-    this.broadcastService.subscribe("msal:acquireTokenSuccess", payload => {
+    this.subscription = this.broadcastService.subscribe("msal:acquireTokenSuccess", payload => {
       console.log(`login success ${payload}`);
     });
 
@@ -41,6 +42,14 @@ export class HomePage {
     });
   }
 
+  ngOnDestroy() {
+    this.broadcastService.getMSALSubject().next(1);
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
   isLoggedIn: boolean = false;
   userData = {name:"User name", email:"email@microsoft.com"};
+  private subscription: Subscription;
 }
