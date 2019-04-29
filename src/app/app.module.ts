@@ -14,6 +14,9 @@ import { MsalModule, MsalInterceptor } from "@azure/msal-angular";
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LogLevel } from 'msal';
 
+import { Deeplinks } from '@ionic-native/deeplinks/ngx';
+import { environment } from 'src/environments/environment.prod';
+
 export function loggerCallback(logLevel, message, piiEnabled) {
   console.log(`client logging: ${message}`);
 }
@@ -27,9 +30,9 @@ export const protectedResourceMap: [string, string[]][] = [['https://buildtodose
       clientID: '17071bd2-7310-4bd1-9744-d9060609e5cc',
       authority: "https://login.microsoftonline.com/common/",
       validateAuthority: true,
-      redirectUri: "http://localhost:8100/",
+      redirectUri: environment.redirectUrl,
       cacheLocation: "localStorage",
-      postLogoutRedirectUri: "http://localhost:8100/",
+      postLogoutRedirectUri: environment.redirectUrl,
       navigateToLoginRequestUrl: true,
       popUp: false,
       consentScopes: ["user.read", "api://a88bb933-319c-41b5-9f04-eff36d985612/access_as_user"],
@@ -44,8 +47,12 @@ export const protectedResourceMap: [string, string[]][] = [['https://buildtodose
   providers: [
     StatusBar,
     SplashScreen,
+    Deeplinks,
     HttpServiceHelper,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {
+      provide: RouteReuseStrategy,
+      useClass: IonicRouteStrategy
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: MsalInterceptor,
