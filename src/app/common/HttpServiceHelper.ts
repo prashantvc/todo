@@ -8,6 +8,10 @@ export class HttpServiceHelper {
     constructor(private http: HttpClient) {
     }
 
+    public getPicture(url: string): Observable<Blob>{
+        return this.http.get(url, {responseType: 'blob'});
+    }
+
     public httpGetRequest(url: string) {
         return this.http.get(url)
             .map(response => {

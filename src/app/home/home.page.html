@@ -6,7 +6,8 @@
 <ion-content padding>
   <div *ngIf="isLoggedIn">
     <ion-card color="light">
-      <ion-img src="https://upload.wikimedia.org/wikipedia/commons/b/bb/Kittyply_edit1.jpg"></ion-img>
+      <ion-img [src]="imageData">
+      </ion-img>
       <ion-card-header>
         <ion-card-subtitle>PROFILE</ion-card-subtitle>
         <ion-card-title>{{userData.name}}</ion-card-title>
