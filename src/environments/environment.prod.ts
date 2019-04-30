@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  redirectUrl: "https://ionic-prchol.azurewebsites.net/"
+  redirectUrl: "http://localhost:8100/"
 };
