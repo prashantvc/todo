@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BroadcastService, MsalService } from '@azure/msal-angular';
+import { CosmosClient } from '@azure/cosmos';
 
 @Component({
   selector: 'app-product',
@@ -8,16 +8,18 @@ import { BroadcastService, MsalService } from '@azure/msal-angular';
 })
 export class ProductPage implements OnInit {
 
-  constructor(private broadcastService: BroadcastService,
-    private authService: MsalService) { }
+  client = new CosmosClient({
+    endpoint: "https://ionic-db.documents.azure.com:443/",
+    auth: { masterKey: "OSAGFCsIzhdufU0b1vEwBSNuyFXWwRgaM7EUBddoNQnL6Nio1AG54nmcvaa4iOBYEnXgtbfMYxLa3ygP7uWLCQ==" }
+  });
+
+  databaseDefinition = { id: "sample database" };
+
+  constructor() { }
 
   ngOnInit() {
-    this.broadcastService.subscribe("msal:acquireTokenSuccess", payload => {
-      console.log(payload);
-    });
-
-    this.broadcastService.subscribe("msal:acquireTokenFailure", payload => {
-      console.log(payload);
-    });
+    this.client.databases.create(this.databaseDefinition);
+    console.log("created db");
   }
 }
+ 
