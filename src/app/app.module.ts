@@ -27,7 +27,7 @@ export const protectedResourceMap: [string, string[]][] = [['https://buildtodose
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,
     MsalModule.forRoot({
-      clientID: '17071bd2-7310-4bd1-9744-d9060609e5cc',
+      clientID: 'c0469624-379e-49a1-b35e-04a79cc0d32a',
       authority: "https://login.microsoftonline.com/common/",
       validateAuthority: true,
       redirectUri: environment.redirectUrl,
